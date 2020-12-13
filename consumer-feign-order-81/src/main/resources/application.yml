@@ -1,18 +1,24 @@
 server:
-  port: 80
+  port: 81
 
 eureka:
   client:
     #向注册中心注册自己
-    register-with-eureka: true
+    register-with-eureka: false
     #是否从eureka server 抓取已有的注册信息，默认为true。单点无所谓，集群必须设置为true才能配合ribbon设置负载均衡
     fetch-registry: true
     service-url:
       #设置与eureka server 交互的地址查询服务和注册服务都需要依赖这个地址
       defaultZone: http://localhost:7001/eureka/,http://localhost:7002/eureka/
   instance:
-    instance-id: order80
+    instance-id: order81
     prefer-ip-address: true
 spring:
   application:
     name: order-service
+ribbon:
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+logging:
+  level:
+    com.xing.springcloud.service.PaymentService: debug

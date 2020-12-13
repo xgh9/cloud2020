@@ -3,31 +3,30 @@ package com.xing.springcloud.controller;
 import com.xing.springcloud.entities.JsonResponse;
 import com.xing.springcloud.entities.Payment;
 import com.xing.springcloud.service.PaymentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
+import javax.annotation.Resource;
 
 @RestController
-public class PaymentController {
-    @Autowired
+public class FeignOrderController {
+
+    @Resource
     PaymentService paymentService;
 
-    @PostMapping("/payment/create")
+    @PostMapping("/feign/create")
     public JsonResponse create(@RequestBody Payment payment){
-        return paymentService.insert(payment);
+        return paymentService.create(payment);
     }
 
-    @GetMapping("/payment/get/{id}")
+    @GetMapping("/feign/get/{id}")
     public JsonResponse getPaymentById(@PathVariable("id") long id){
         return paymentService.getPaymentById(id);
     }
 
-    @GetMapping("/payment/timeOut")
-    public JsonResponse timeOut() {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return JsonResponse.success();
+    @GetMapping("/feign/timeOut")
+    public JsonResponse timeOut(){
+        return paymentService.timeOut();
     }
 }

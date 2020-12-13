@@ -1,10 +1,9 @@
 package com.xing.springcloud.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
+
 @Data
 public class JsonResponse extends HashMap<String, Object> {
     private static String CODE = "code";
